@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Iniciar sesión</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../iniciar_sesion/css/css_inc_sesion.css">
+    <link rel="icon" href="../img/logo.png">
+    <style>
+        /* Animaciones */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 2s;
+        }
+        .blink {
+            animation: blink 2s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .typing {
+            border-right: .15em solid #000;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: black; }
+        }
+        .splash {
+            position: relative;
+            overflow: hidden;
+        }
+        .splash::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s, opacity 0.5s;
+            opacity: 0;
+        }
+        .splash:active::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            transition: 0s;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<header class="cabeza">
+    <h2 class="titleheader">Iniciar Sesión</h2>
+</header>
+<body>
+    <div class="contenedor">
+        <div class="cuadro">
+            <h1 class="title blink">Healthy-Habits</h1>
+            <br><br><br>
+        </div>
+        <div class="cuadro1">
+            <br><br><br><br><br><br><br><br>
+        </div>
+        <div class="form-overlay">
+            <form id="loginForm" action="../php/login.php" method="POST">
+                <input type="email" id="email" name="email" placeholder="Correo"><br><br>
+                <span id="emailError" class="error"></span>
+                <input type="password" id="password" name="password" placeholder="Contraseña"><br><br>
+                <span id="passwordError" class="error"></span>
+                <input type="submit" value="Entrar" class="splash">
+            </form>
+        </div>
+    </div>
+</body>
+<footer class="Footer">
+    <div class="FooterContent">
+        <div class="Title">
+            <div class="Figma">
+                <div class="Icon"></div>
+            </div>
+            <div class="ButtonList">
+                <a href="#" class="XLogo">
+                    <div class="Icon"></div>
+                </a>
+                <a href="#" class="LogoInstagram">
+                    <div class="Icon"></div>
+                </a>
+                <a href="#" class="LogoYoutube">
+                    <div class="Icon"></div>
+                </a>
+                <a href="#" class="Linkedin">
+                    <div class="Icon"></div>
+                </a>
+            </div>
+        </div>
+        <div class="TextLinkList">
+            <h3 class="Title">Sobre nosotros</h3>
+            <ul>
+                <li><a href="#" class="ListItem">Información de contacto</a></li>
+                <li><a href="#" class="ListItem">Logros</a></li>
+            </ul>
+        </div>
+        <div class="TextLinkList">
+            <h3 class="Title">Resources</h3>
+            <ul>
+                <li><a href="#" class="ListItem">Testimonios</a></li>
+                <li><a href="#" class="ListItem">Recursos</a></li>
+                <li><a href="#" class="ListItem">Soporte</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy-Habits</title>
+    <link rel="stylesheet" href="styles-inicio.css">
+    <link rel="icon" href="../img/logo.png">
+</head>
+<body>
+    <main class="inicio">
+        <header class="header">
+            <nav class="NavigationList">
+                <a class="navegar" href="#">
+                    <span class="Title">Proyectos</span>
+                </a>
+                <a class="navegar" href="#">
+                    <span class="Title">Notificaciones</span>
+                </a>
+                <a class="navegar" href="#">
+                    <span class="Title">Estadísticas</span>
+                </a>
+                <!-- Botón para agregar tarea -->
+                <button id="agregarTareaBtn">Agregar tarea</button>
+            </nav>
+        </header>
+        
+        <div class="bodyPage">
+            <div class="cuadroTitulo">
+                <h1 class="title">Bienvenido</h1>
+                <h1 class="title1">Gestionar tareas</h1>
+            </div>
+            <div class="vistasCont">
+                <div class="vistas">
+                    <ul class="listaVistas">
+                        <li class="opcion" id="misTareasLink" tabindex="0">Mis tareas</li>
+                        <li class="opcion" id="calendarioLink" tabindex="0">Calendario</li>
+                        
+                        <li class="opcion" id="miniJuegoLink" tabindex="0">
+                            <a class="text"  href="http://localhost/proyecto-des-web/juego/game.html">Mini Juego</a></li>
+
+                    </ul>
+                </div>
+                
+                <div class="tareasCont">
+                    <!-- Lista de tareas -->
+                    <div id="tareasList">
+                        <!-- Las tareas se agregarán aquí dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="Footer">
+            <div class="FooterContent">
+                <div class="Title">
+                    <div class="Figma">
+                        <div class="Icon"></div>
+                    </div>
+                    <div class="ButtonList">
+                        <a href="#" class="XLogo">
+                            <div class="Icon"></div>
+                        </a>
+                        <a href="#" class="LogoInstagram">
+                            <div class="Icon"></div>
+                        </a>
+                        <a href="#" class="LogoYoutube">
+                            <div class="Icon"></div>
+                        </a>
+                        <a href="#" class="Linkedin">
+                            <div class="Icon"></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="TextLinkList">
+                    <h3 class="Title">Sobre nosotros</h3>
+                    <ul>
+                        <li><a href="#" class="ListItem">Información de contacto</a></li>
+                        <li><a href="#" class="ListItem">Logros</a></li>
+                    </ul>
+                </div>
+                <div class="TextLinkList">
+                    <h3 class="Title">Resources</h3>
+                    <ul>
+                        <li><a href="#" class="ListItem">Testimonios</a></li>
+                        <li><a href="#" class="ListItem">Recursos</a></li>
+                        <li><a href="#" class="ListItem">Soporte</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script >
+       // script.js
+
+// Elementos del DOM
+const agregarTareaBtn = document.getElementById("agregarTareaBtn");
+const tareasList = document.getElementById("tareasList");
+
+// Elementos de vistas
+const vistasTareas = document.getElementById("vistasTareas");
+const vistasCalendario = document.getElementById("vistasCalendario");
+
+
+
+
+
+// Función para agregar tarea
+function agregarTarea() {
+    const tareaInput = document.createElement("input");
+    tareaInput.type = "text";
+    tareaInput.placeholder = "Escribe tu tarea...";
+    tareaInput.classList.add("inputTarea");
+
+    const confirmarBtn = document.createElement("button");
+    confirmarBtn.textContent = "Agregar";
+    confirmarBtn.classList.add("confirmarBtn");
+
+    tareasList.innerHTML = ''; // Limpiar las tareas existentes antes de mostrar el formulario
+    tareasList.appendChild(tareaInput);
+    tareasList.appendChild(confirmarBtn);
+
+    confirmarBtn.addEventListener("click", function () {
+        const tareaTexto = tareaInput.value.trim();
+        if (tareaTexto) {
+            const tareaElemento = document.createElement("div");
+            tareaElemento.classList.add("tareaElemento");
+            const tareaTextoElem = document.createElement("span");
+            tareaTextoElem.textContent = tareaTexto;
+
+            const fechaElem = document.createElement("span");
+            const fecha = new Date();
+            fechaElem.textContent = ` (Creada el: ${fecha.toLocaleString()})`;
+            fechaElem.classList.add("fecha");
+
+            const eliminarBtn = document.createElement("button");
+            eliminarBtn.textContent = "Eliminar";
+            eliminarBtn.classList.add("eliminarBtn");
+
+            tareaElemento.appendChild(tareaTextoElem);
+            tareaElemento.appendChild(fechaElem);
+            tareaElemento.appendChild(eliminarBtn);
+
+            tareasList.appendChild(tareaElemento);
+            tareaInput.value = '';
+
+            eliminarBtn.addEventListener("click", function () {
+                const confirmacion = confirm("¿Estás seguro de que quieres eliminar esta tarea?");
+                if (confirmacion) {
+                    tareaElemento.remove();
+                }
+            });
+        } else {
+            alert("Por favor, escribe una tarea.");
+        }
+    });
+}
+
+agregarTareaBtn.addEventListener("click", agregarTarea);
+
+// Funciones para mostrar las diferentes vistas
+function mostrarVistaTareas() {
+    ocultarTodasLasVistas();
+    vistasTareas.style.display = "block";
+}
+
+function mostrarVistaCalendario() {
+    ocultarTodasLasVistas();
+    vistasCalendario.style.display = "block";
+}
+
+
+
+// Función para ocultar todas las vistas
+function ocultarTodasLasVistas() {
+    vistasTareas.style.display = "none";
+    vistasCalendario.style.display = "none";
+  
+}
+
+
+// Eventos para alternar vistas
+document.getElementById("misTareasLink").addEventListener("click", mostrarVistaTareas);
+document.getElementById("calendarioLink").addEventListener("click", mostrarVistaCalendario);
+
+
+
+    </script>  
+</body>
+</html>

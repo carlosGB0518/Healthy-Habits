@@ -1,0 +1,53 @@
+// Verificar si el formulario fue enviado
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Recoger los datos del formulario
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confirmPassword = $_POST['confirmPassword'];
+    $phone = $_POST['phone'];
+
+    // Validar que los campos no estén vacíos
+    if (empty($username) || empty($email) || empty($password) || empty($confirmPassword)) {
+        echo "Todos los campos son obligatorios.";
+        exit;
+    }
+
+    // Validar que las contraseñas coincidan
+    if ($password != $confirmPassword) {
+        echo "Las contraseñas no coinciden.";
+        exit;
+    }
+
+    // Encriptar la contraseña
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // Verificar si el correo ya existe
+    $checkEmailQuery = "SELECT * FROM users WHERE email = ?";
+    $stmt = $conn->prepare($checkEmailQuery);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        echo "El correo electrónico ya está registrado.";
+        exit;
+    }
+
+    // Insertar el nuevo usuario en la base de datos
+    $insertQuery = "INSERT INTO users (username, email, password, phone) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($insertQuery);
+    $stmt->bind_param("ssss", $username, $email, $hashedPassword, $phone);
+    if ($stmt->execute()) {
+        echo "Usuario registrado con éxito.";
+        // Redirigir a la página de inicio de sesión 
+        header("Location: http://localhost/proyecto-des-web/inicio/inicio.html");
+        exit;
+    } else {
+        echo "Error al registrar el usuario: " . $stmt->error;
+    }
+
+    // Cerrar la conexión
+    $stmt->close();
+    $conn->close();
+}
+?>
